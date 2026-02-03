@@ -1,0 +1,37 @@
+name: Setup Rust development environment
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      # Install Rust toolchain (latest stable)
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy, rustfmt
+          
+      # Add musl target for static binary builds
+      - name: Add musl target
+        run: rustup target add x86_64-unknown-linux-musl
+        
+      # Install system dependencies for SQL libraries
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            musl-tools \
+            libsqlite3-dev \
+            libpq-dev \
+            pkg-config \
+            libssl-dev
+            
+      # Pre-fetch Cargo dependencies if Cargo.toml exists
+      - name: Fetch Cargo dependencies
+        run: |
+          if [ -f "Cargo.toml" ]; then
+            cargo fetch
+          fi
+        continue-on-error: true
