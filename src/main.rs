@@ -10,7 +10,7 @@ use std::path::PathBuf;
 )]
 struct Args {
     /// Database connection URL (e.g., postgres://user:pass@host/db or sqlite://path/to/db.db)
-    #[arg(short, long, env = "DATABASE_URL")]
+    #[arg(short, long)]
     database: String,
 
     /// Path to SQL file to execute

@@ -18,7 +18,7 @@ clap = { version = "4.5", features = ["derive"] }
 tokio = { version = "1.42", features = ["full"] }
 
 # Database connectivity with async support
-sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "sqlite", "postgres", "any"] }
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "sqlite", "postgres"] }
 
 # Error handling
 anyhow = "1.0"

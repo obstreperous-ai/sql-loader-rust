@@ -1,6 +1,5 @@
 use sqlx::sqlite::SqlitePool;
 use std::fs;
-use std::path::PathBuf;
 use tempfile::NamedTempFile;
 
 #[tokio::test]
