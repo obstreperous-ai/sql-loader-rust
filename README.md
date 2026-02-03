@@ -40,8 +40,8 @@ cargo install --path .
 # Load SQL script into PostgreSQL
 sql-loader --database postgres://user:pass@localhost/dbname --file script.sql
 
-# Load SQL script into SQLite
-sql-loader --database sqlite://./data.db --file migrations.sql
+# Load SQL script into SQLite (use ?mode=rwc to create file if it doesn't exist)
+sql-loader --database sqlite://./data.db?mode=rwc --file migrations.sql
 
 # Display help
 sql-loader --help
@@ -51,7 +51,8 @@ sql-loader --help
 
 - `--database <URI>` or `-d <URI>`: Database connection URI
   - PostgreSQL: `postgres://user:pass@host:port/dbname`
-  - SQLite: `sqlite://path/to/database.db`
+  - SQLite: `sqlite://path/to/database.db?mode=rwc` (use `?mode=rwc` to create file if needed)
+  - In-memory SQLite: `sqlite::memory:`
 - `--file <PATH>` or `-f <PATH>`: Path to SQL script file
 
 ## Development
