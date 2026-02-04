@@ -1,0 +1,79 @@
+version: '3'
+
+vars:
+  BINARY_NAME: sql-loader
+  MUSL_TARGET: x86_64-unknown-linux-musl
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  build:
+    desc: Build the project in debug mode
+    cmds:
+      - cargo build
+
+  build-release:
+    desc: Build optimized release binary
+    cmds:
+      - cargo build --release
+
+  build-static:
+    desc: Build static binary for Linux (musl)
+    cmds:
+      - rustup target add {{.MUSL_TARGET}}
+      - cargo build --release --target {{.MUSL_TARGET}}
+    
+  test:
+    desc: Run all tests
+    cmds:
+      - cargo test
+
+  test-verbose:
+    desc: Run tests with verbose output
+    cmds:
+      - cargo test -- --nocapture
+
+  fmt:
+    desc: Format code with rustfmt
+    cmds:
+      - cargo fmt
+
+  fmt-check:
+    desc: Check code formatting
+    cmds:
+      - cargo fmt -- --check
+
+  lint:
+    desc: Run clippy linter
+    cmds:
+      - cargo clippy -- -D warnings
+
+  check:
+    desc: Run all checks (fmt, lint, test)
+    cmds:
+      - task: fmt-check
+      - task: lint
+      - task: test
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - cargo clean
+
+  run:
+    desc: Run the CLI (pass args with -- arg1 arg2)
+    cmds:
+      - cargo run -- {{.CLI_ARGS}}
+
+  install:
+    desc: Install the binary locally
+    cmds:
+      - cargo install --path .
+
+  doc:
+    desc: Generate and open documentation
+    cmds:
+      - cargo doc --open
