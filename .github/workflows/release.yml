@@ -12,6 +12,8 @@ jobs:
   create-release:
     name: Create release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
@@ -30,6 +32,8 @@ jobs:
     name: Build release binaries
     needs: create-release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
         target:
